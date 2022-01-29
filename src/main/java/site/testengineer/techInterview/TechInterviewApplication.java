@@ -1,13 +1,46 @@
 package site.testengineer.techInterview;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.autoconfigure.domain.EntityScan;
+import site.testengineer.techInterview.entity.ExercisesEntity;
+import site.testengineer.techInterview.entity.UserEntity;
+import site.testengineer.techInterview.repository.ExercisesRepository;
+import site.testengineer.techInterview.repository.UserRepository;
 
 @SpringBootApplication
-public class TechInterviewApplication {
+public class TechInterviewApplication implements CommandLineRunner {
 
-	public static void main(String[] args) {
-		SpringApplication.run(TechInterviewApplication.class, args);
-	}
+    @Autowired
+    private UserRepository userRepository;
 
+    @Autowired
+    private ExercisesRepository exercisesRepository;
+
+    public static void main(String[] args) {
+        SpringApplication.run(TechInterviewApplication.class, args);
+    }
+
+    @Override
+    public void run(String... args) throws Exception {
+        UserEntity userEntity = new UserEntity();
+        userEntity.setId(1L);
+        userEntity.setUsername("Test");
+
+
+        ExercisesEntity exercisesEntity = new ExercisesEntity();
+        exercisesEntity.setId(1L);
+        exercisesEntity.setDescription("This is Test exercises");
+        exercisesEntity.setTitle("This is test title");
+
+
+        userEntity.getExercises().add(exercisesEntity);
+
+        userRepository.save(userEntity);
+        exercisesRepository.save(exercisesEntity);
+
+
+    }
 }
