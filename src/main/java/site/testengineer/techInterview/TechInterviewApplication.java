@@ -4,7 +4,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.boot.autoconfigure.domain.EntityScan;
 import site.testengineer.techInterview.entity.ExercisesEntity;
 import site.testengineer.techInterview.entity.UserEntity;
 import site.testengineer.techInterview.repository.ExercisesRepository;
@@ -36,7 +35,7 @@ public class TechInterviewApplication implements CommandLineRunner {
         exercisesEntity.setTitle("This is test title");
 
 
-        userEntity.getExercises().add(exercisesEntity);
+        userEntity.getExercisesList().add(exercisesEntity);
 
         userRepository.save(userEntity);
         exercisesRepository.save(exercisesEntity);

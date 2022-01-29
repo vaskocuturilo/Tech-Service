@@ -3,10 +3,10 @@ package site.testengineer.techInterview.entity;
 import javax.persistence.*;
 
 @Entity
+@Table(name = "ExercisesEntity", schema = "dbo")
 public class ExercisesEntity {
 
     @Id
-    @GeneratedValue(strategy= GenerationType.AUTO)
     private Long id;
     private String title;
     private String description;
@@ -19,6 +19,14 @@ public class ExercisesEntity {
         this.id = id;
         this.title = title;
         this.description = description;
+    }
+
+    public Boolean getCompleted() {
+        return completed;
+    }
+
+    public void setCompleted(Boolean completed) {
+        this.completed = completed;
     }
 
     public Long getId() {

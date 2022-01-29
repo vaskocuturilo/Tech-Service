@@ -8,26 +8,26 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
+@Table(name = "UserEntity", schema = "dbo")
 public class UserEntity {
 
     @Id
-    @GeneratedValue(strategy= GenerationType.AUTO)
     private Long id;
 
     private String username;
 
-    @OneToMany(fetch = FetchType.LAZY)
+    @OneToMany
     @NotFound(action = NotFoundAction.IGNORE)
-    List<ExercisesEntity> exercises = new ArrayList<>();
+    List<ExercisesEntity> exercisesList = new ArrayList<>();
 
 
     public UserEntity() {
     }
 
-    public UserEntity(Long id, String username, List<ExercisesEntity> exercises) {
+    public UserEntity(Long id, String username, List<ExercisesEntity> exercisesList) {
         this.id = id;
         this.username = username;
-        this.exercises = exercises;
+        this.exercisesList = exercisesList;
     }
 
     public Long getId() {
@@ -46,11 +46,11 @@ public class UserEntity {
         this.username = username;
     }
 
-    public List<ExercisesEntity> getExercises() {
-        return exercises;
+    public List<ExercisesEntity> getExercisesList() {
+        return exercisesList;
     }
 
-    public void setExercises(List<ExercisesEntity> exercises) {
-        this.exercises = exercises;
+    public void setExercisesList(List<ExercisesEntity> exercisesList) {
+        this.exercisesList = exercisesList;
     }
 }
