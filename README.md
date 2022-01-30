@@ -30,7 +30,7 @@ You will need the following technologies available to try it out:
 ![](https://b.radikal.ru/b43/2201/c7/42937f257f3b.png)
 
 ### How it works. (Not correct schema)
-![](https://b.radikal.ru/b43/2201/c7/42937f257f3b.png)
+![](https://c.radikal.ru/c18/2201/cb/3b4fa47b379e.png)
 ### Ho w to run.
 
 ``` ```
