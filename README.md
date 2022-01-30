@@ -26,11 +26,14 @@ You will need the following technologies available to try it out:
 * Docker
 * IDE of your choice
 
+### Shema databases
+![](https://b.radikal.ru/b43/2201/c7/42937f257f3b.png)
+
 ### How it works. (Not correct schema)
-![]()
+![](https://d.radikal.ru/d43/2201/90/4a22392122e1.png)
 ### Ho w to run.
 
-``` docker-compose up```
+``` ```
 
 ![]()
 
