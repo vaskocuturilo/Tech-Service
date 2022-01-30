@@ -26,6 +26,7 @@ public class UserController {
         return userRepository.findById(userId).orElseThrow(() -> new NoSuchElementException());
     }
 
+    @PostMapping
     public UserEntity addUser(@RequestBody UserEntity userEntity) {
         return userRepository.save(userEntity);
     }
