@@ -1,11 +1,13 @@
 package site.testengineer.techInterview;
 
+import controller.UserController;
 import io.restassured.builder.RequestSpecBuilder;
 import io.restassured.filter.log.RequestLoggingFilter;
 import io.restassured.filter.log.ResponseLoggingFilter;
 import io.restassured.http.ContentType;
 import io.restassured.specification.RequestSpecification;
 import jdk.jfr.Description;
+import model.User;
 import org.hamcrest.Matchers;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -35,12 +37,9 @@ public class TechInterviewSimpleUsersCorrectDataTest {
     @Test
     @Description("This is automation script for check status code")
     public void testTechInterviewCheckPositiveStatusCode() {
-        given().spec(spec)
-                .when()
-                .get("/1")
-                .then()
-                .assertThat()
-                .statusCode(200);
+        User user = new User();
+        UserController userController = new UserController(user);
+        userController.getElement();
     }
 
     @Test
