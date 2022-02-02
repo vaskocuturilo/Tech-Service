@@ -17,6 +17,7 @@ import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 import static io.restassured.RestAssured.given;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.Matchers.*;
 
 public class TechInterviewSimpleUsersCorrectDataTest {
@@ -79,5 +80,23 @@ public class TechInterviewSimpleUsersCorrectDataTest {
                 .assertThat()
                 .body("username", equalTo("Test"))
                 .body("exercisesList", Matchers.hasItem(expected));
+    }
+
+    @Test
+    @Description("This is automation script for check body with model")
+    public void testTechInterviewCheckBodyModel() {
+        User user = given().spec(spec)
+                .when()
+                .get("/1")
+                .then()
+                .assertThat()
+                .statusCode(200)
+                .extract().as(User.class);
+
+        assertThat(user.getId()).isEqualTo(1);
+        assertThat(user.getUsername()).isEqualTo("Test");
+        assertThat(user.getExercisesList().stream().findFirst().get().getTitle()).isEqualTo("This is test title");
+        assertThat(user.getExercisesList().stream().findFirst().get().getDescription()).isEqualTo("This is Test exercises");
+        assertThat(user.getExercisesList().stream().findFirst().get().isCompleted()).isEqualTo(false);
     }
 }
