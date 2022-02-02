@@ -33,8 +33,7 @@ You will need the following technologies available to try it out:
 ![](https://c.radikal.ru/c18/2201/cb/3b4fa47b379e.png)
 
 ### Swagger-UI. (http://localhost:8080/swagger-ui)
-
-![](https://d.radikal.ru/d08/2202/cd/e764cdf7e5eb.png)
+![](https://a.radikal.ru/a10/2202/bf/a53ef00c184a.png)
 
 ### Ho w to run.
 
