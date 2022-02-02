@@ -31,9 +31,14 @@ You will need the following technologies available to try it out:
 
 ### How it works.
 ![](https://c.radikal.ru/c18/2201/cb/3b4fa47b379e.png)
+
+### Swagger-UI. (http://localhost:8080/swagger-ui)
+
+![](https://d.radikal.ru/d08/2202/cd/e764cdf7e5eb.png)
+
 ### Ho w to run.
 
-``` ```
+```mvn spring-boot:run ```
 
 ![]()
 
