@@ -5,13 +5,13 @@ import site.testengineer.techInterview.entity.ExercisesEntity;
 import site.testengineer.techInterview.entity.UserEntity;
 import site.testengineer.techInterview.repository.ExercisesRepository;
 import site.testengineer.techInterview.repository.UserRepository;
+import site.testengineer.techInterview.request.UserRequest;
 
 import java.util.NoSuchElementException;
 
 @RestController
 @RequestMapping("/users")
 public class UserController {
-
 
     private UserRepository userRepository;
     private ExercisesRepository exercisesRepository;
@@ -27,7 +27,9 @@ public class UserController {
     }
 
     @PostMapping
-    public UserEntity addUser(@RequestBody UserEntity userEntity) {
+    public UserEntity addUser(@RequestBody UserRequest userRequest) {
+     UserEntity userEntity = new UserEntity();
+     userEntity.setUsername(userRequest.getUsername());
         return userRepository.save(userEntity);
     }
 
