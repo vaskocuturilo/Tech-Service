@@ -8,8 +8,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Table(name = "UserEntity", schema = "dbo")
-public class UserEntity {
+@Table(name = "user", schema = "dbo")
+public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -19,13 +19,13 @@ public class UserEntity {
 
     @OneToMany
     @NotFound(action = NotFoundAction.IGNORE)
-    List<ExercisesEntity> exercisesList = new ArrayList<>();
+    List<Exercises> exercisesList = new ArrayList<>();
 
 
-    public UserEntity() {
+    public User() {
     }
 
-    public UserEntity(Long id, String username, List<ExercisesEntity> exercisesList) {
+    public User(Long id, String username, List<Exercises> exercisesList) {
         this.id = id;
         this.username = username;
         this.exercisesList = exercisesList;
@@ -47,11 +47,11 @@ public class UserEntity {
         this.username = username;
     }
 
-    public List<ExercisesEntity> getExercisesList() {
+    public List<Exercises> getExercisesList() {
         return exercisesList;
     }
 
-    public void setExercisesList(List<ExercisesEntity> exercisesList) {
+    public void setExercisesList(List<Exercises> exercisesList) {
         this.exercisesList = exercisesList;
     }
 }

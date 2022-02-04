@@ -3,9 +3,8 @@ package site.testengineer.techInterview.entity;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "ExercisesEntity", schema = "dbo")
-public class ExercisesEntity {
-
+@Table(name = "exercises", schema = "dbo")
+public class Exercises {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
@@ -13,10 +12,10 @@ public class ExercisesEntity {
     private String description;
     private Boolean completed = Boolean.FALSE;
 
-    public ExercisesEntity() {
+    public Exercises() {
     }
 
-    public ExercisesEntity(Long id, String title, String description) {
+    public Exercises(Long id, String title, String description) {
         this.id = id;
         this.title = title;
         this.description = description;

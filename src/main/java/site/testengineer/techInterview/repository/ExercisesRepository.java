@@ -1,7 +1,7 @@
 package site.testengineer.techInterview.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
-import site.testengineer.techInterview.entity.ExercisesEntity;
+import site.testengineer.techInterview.entity.Exercises;
 
-public interface ExercisesRepository extends JpaRepository<ExercisesEntity, Long> {
+public interface ExercisesRepository extends JpaRepository<Exercises, Long> {
 }
