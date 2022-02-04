@@ -3,6 +3,9 @@ package site.testengineer.techInterview.controller;
 import org.springframework.web.bind.annotation.*;
 import site.testengineer.techInterview.entity.ExercisesEntity;
 import site.testengineer.techInterview.entity.UserEntity;
+import site.testengineer.techInterview.exception.CanSaveExercise;
+import site.testengineer.techInterview.exception.ExercisesNotFound;
+import site.testengineer.techInterview.exception.UserNotFound;
 import site.testengineer.techInterview.repository.ExercisesRepository;
 import site.testengineer.techInterview.repository.UserRepository;
 import site.testengineer.techInterview.request.ExercisesRequest;
@@ -14,6 +17,11 @@ import java.util.NoSuchElementException;
 @RequestMapping("/users")
 public class UserController {
 
+    private static final String USER_NOT_FOUND_MSG = "User not Found";
+    private static final String EXERCISE_NO_SAVE_MSG = "Can't save exercise";
+    private static final String EXERCISE_NOT_FOUND = "Exercise not found";
+
+
     private UserRepository userRepository;
     private ExercisesRepository exercisesRepository;
 
@@ -23,8 +31,8 @@ public class UserController {
     }
 
     @GetMapping("/{userId}")
-    public UserEntity getUserById(@PathVariable Long userId) {
-        return userRepository.findById(userId).orElseThrow(() -> new NoSuchElementException());
+    public UserEntity getUserById(@PathVariable Long userId) throws UserNotFound {
+        return userRepository.findById(userId).orElseThrow(() -> new UserNotFound(USER_NOT_FOUND_MSG));
     }
 
     @PostMapping
@@ -35,8 +43,8 @@ public class UserController {
     }
 
     @PostMapping("/{userId}/exercise")
-    public void addExercises(@PathVariable Long userId, @RequestBody ExercisesRequest exercisesRequest) {
-        UserEntity userEntity = userRepository.findById(userId).orElseThrow(() -> new NoSuchElementException());
+    public void addExercises(@PathVariable Long userId, @RequestBody ExercisesRequest exercisesRequest) throws CanSaveExercise {
+        UserEntity userEntity = userRepository.findById(userId).orElseThrow(() -> new CanSaveExercise(EXERCISE_NO_SAVE_MSG));
 
         ExercisesEntity exercisesEntity = new ExercisesEntity();
         exercisesEntity.setTitle(exercisesRequest.getTitle());
@@ -49,15 +57,15 @@ public class UserController {
     }
 
     @PostMapping("/exercises/{exerciseId}")
-    public void toggleExercisesComplete(@PathVariable Long exercisesId) {
-        ExercisesEntity exercisesEntity = exercisesRepository.findById(exercisesId).orElseThrow(() -> new NoSuchElementException());
+    public void toggleExercisesComplete(@PathVariable Long exercisesId) throws ExercisesNotFound {
+        ExercisesEntity exercisesEntity = exercisesRepository.findById(exercisesId).orElseThrow(() -> new ExercisesNotFound(EXERCISE_NOT_FOUND));
         exercisesEntity.setCompleted(!exercisesEntity.getCompleted());
         exercisesRepository.save(exercisesEntity);
     }
 
     @DeleteMapping("exercises/{exercisesId}")
-    public void deleteExercises(@PathVariable Long exercisesId) {
-        ExercisesEntity exercisesEntity = exercisesRepository.findById(exercisesId).orElseThrow(() -> new NoSuchElementException());
+    public void deleteExercises(@PathVariable Long exercisesId) throws ExercisesNotFound {
+        ExercisesEntity exercisesEntity = exercisesRepository.findById(exercisesId).orElseThrow(() -> new ExercisesNotFound(EXERCISE_NOT_FOUND));
         exercisesRepository.delete(exercisesEntity);
     }
 }
