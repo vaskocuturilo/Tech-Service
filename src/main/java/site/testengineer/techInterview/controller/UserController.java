@@ -5,6 +5,7 @@ import site.testengineer.techInterview.entity.ExercisesEntity;
 import site.testengineer.techInterview.entity.UserEntity;
 import site.testengineer.techInterview.repository.ExercisesRepository;
 import site.testengineer.techInterview.repository.UserRepository;
+import site.testengineer.techInterview.request.ExercisesRequest;
 import site.testengineer.techInterview.request.UserRequest;
 
 import java.util.NoSuchElementException;
@@ -28,15 +29,23 @@ public class UserController {
 
     @PostMapping
     public UserEntity addUser(@RequestBody UserRequest userRequest) {
-     UserEntity userEntity = new UserEntity();
-     userEntity.setUsername(userRequest.getUsername());
+        UserEntity userEntity = new UserEntity();
+        userEntity.setUsername(userRequest.getUsername());
         return userRepository.save(userEntity);
     }
 
     @PostMapping("/{userId}/exercise")
-    public void addExercises(@PathVariable Long userId, @RequestBody ExercisesEntity exercisesEntity) {
+    public void addExercises(@PathVariable Long userId, @RequestBody ExercisesRequest exercisesRequest) {
         UserEntity userEntity = userRepository.findById(userId).orElseThrow(() -> new NoSuchElementException());
+
+        ExercisesEntity exercisesEntity = new ExercisesEntity();
+        exercisesEntity.setTitle(exercisesRequest.getTitle());
+        exercisesEntity.setDescription(exercisesRequest.getDescription());
+        exercisesEntity.setCompleted(exercisesRequest.getCompleted());
         userEntity.getExercisesList().add(exercisesEntity);
+
+        exercisesRepository.save(exercisesEntity);
+        userRepository.save(userEntity);
     }
 
     @PostMapping("/exercises/{exerciseId}")
