@@ -6,6 +6,7 @@ import io.restassured.filter.log.ResponseLoggingFilter;
 import io.restassured.http.ContentType;
 import io.restassured.specification.RequestSpecification;
 import jdk.jfr.Description;
+import model.User;
 import org.hamcrest.Matchers;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -15,6 +16,7 @@ import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 import static io.restassured.RestAssured.given;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.Matchers.*;
 
 public class TechInterviewSimpleUsersInCorrectDataTest {
@@ -80,5 +82,23 @@ public class TechInterviewSimpleUsersInCorrectDataTest {
                 .assertThat()
                 .body("username", not(equalTo("Test1")))
                 .body("exercisesList", not(Matchers.hasItem(expected)));
+    }
+
+    @Test
+    @Description("This is automation script for check body with model")
+    public void testTechInterviewCheckBodyModel() {
+        User user = given().spec(spec)
+                .when()
+                .get("/1")
+                .then()
+                .assertThat()
+                .statusCode(200)
+                .extract().as(User.class);
+
+        assertThat(user.getId()).isEqualTo(1);
+        assertThat(user.getUsername()).isNotEqualTo("Test");
+        assertThat(user.getExercisesList().stream().findFirst().get().getTitle()).isNotEqualTo("This");
+        assertThat(user.getExercisesList().stream().findFirst().get().getDescription()).isNotEqualTo("This");
+        assertThat(user.getExercisesList().stream().findFirst().get().isCompleted()).isNotEqualTo(false);
     }
 }
