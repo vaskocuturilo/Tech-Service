@@ -35,6 +35,16 @@ You will need the following technologies available to try it out:
 ### Swagger-UI. (http://localhost:8080/swagger-ui)
 ![](https://a.radikal.ru/a10/2202/bf/a53ef00c184a.png)
 
+
+### Actuator
+
+* http://localhost:8090/actuator
+* http://localhost:8090/actuator/health
+* http://localhost:8090/actuator/info
+
+### http://localhost:8090/actuator/health
+```{"status":"UP"}```
+
 ### Ho w to run.
 
 ```mvn spring-boot:run ```
