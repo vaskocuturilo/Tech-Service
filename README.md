@@ -26,7 +26,7 @@ You will need the following technologies available to try it out:
 * Docker
 * IDE of your choice
 
-### Shema databases
+### Schema databases
 ![](https://b.radikal.ru/b43/2201/c7/42937f257f3b.png)
 
 ### How it works.
