@@ -15,26 +15,10 @@ public class Exercises {
     public Exercises() {
     }
 
-    public Exercises(Long id, String title, String description) {
-        this.id = id;
+    public Exercises(String title, String description, Boolean completed) {
         this.title = title;
         this.description = description;
-    }
-
-    public Boolean getCompleted() {
-        return completed;
-    }
-
-    public void setCompleted(Boolean completed) {
         this.completed = completed;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
     }
 
     public String getTitle() {
@@ -51,5 +35,13 @@ public class Exercises {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public Boolean getCompleted() {
+        return completed;
+    }
+
+    public void setCompleted(Boolean completed) {
+        this.completed = completed;
     }
 }

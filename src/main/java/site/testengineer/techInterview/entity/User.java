@@ -1,11 +1,8 @@
 package site.testengineer.techInterview.entity;
 
-import org.hibernate.annotations.NotFound;
-import org.hibernate.annotations.NotFoundAction;
-
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Table(name = "user", schema = "dbo")
@@ -18,14 +15,13 @@ public class User {
     private String username;
 
     @OneToMany
-    @NotFound(action = NotFoundAction.IGNORE)
-    List<Exercises> exercisesList = new ArrayList<>();
+    Set<Exercises> exercisesList = new HashSet<>();
 
 
     public User() {
     }
 
-    public User(Long id, String username, List<Exercises> exercisesList) {
+    public User(Long id, String username, Set<Exercises> exercisesList) {
         this.id = id;
         this.username = username;
         this.exercisesList = exercisesList;
@@ -47,11 +43,11 @@ public class User {
         this.username = username;
     }
 
-    public List<Exercises> getExercisesList() {
+    public Set<Exercises> getExercisesList() {
         return exercisesList;
     }
 
-    public void setExercisesList(List<Exercises> exercisesList) {
+    public void setExercisesList(Set<Exercises> exercisesList) {
         this.exercisesList = exercisesList;
     }
 }
