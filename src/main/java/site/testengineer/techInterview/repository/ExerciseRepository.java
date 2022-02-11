@@ -7,6 +7,6 @@ import site.testengineer.techInterview.entity.User;
 
 import java.util.List;
 
-public interface ExercisesRepository extends CrudRepository<Exercise, Long> {
+public interface ExerciseRepository extends CrudRepository<Exercise, Long> {
     List<Exercise> findByExercise(User user, Sort sort);
 }
