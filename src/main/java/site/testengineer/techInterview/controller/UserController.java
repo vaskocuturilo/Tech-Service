@@ -1,7 +1,7 @@
 package site.testengineer.techInterview.controller;
 
 import org.springframework.web.bind.annotation.*;
-import site.testengineer.techInterview.entity.Exercises;
+import site.testengineer.techInterview.entity.Exercise;
 import site.testengineer.techInterview.entity.User;
 import site.testengineer.techInterview.exception.CanSaveExercise;
 import site.testengineer.techInterview.exception.ExercisesNotFound;
@@ -36,7 +36,7 @@ public class UserController {
     @PostMapping
     public User addUser(@RequestBody UserRequest userRequest) {
         User user = new User();
-        user.setUsername(userRequest.getUsername());
+        user.setFirstname(userRequest.getUsername());
         return userRepository.save(user);
     }
 
@@ -44,26 +44,23 @@ public class UserController {
     public void addExercises(@PathVariable Long userId, @RequestBody ExercisesRequest exercisesRequest) throws CanSaveExercise {
         User user = userRepository.findById(userId).orElseThrow(() -> new CanSaveExercise(EXERCISE_NO_SAVE_MSG));
 
-        Exercises exercises = new Exercises();
-        exercises.setTitle(exercisesRequest.getTitle());
-        exercises.setDescription(exercisesRequest.getDescription());
-        exercises.setCompleted(exercisesRequest.getCompleted());
-        user.getExercisesList().add(exercises);
+        Exercise exercise = new Exercise();
 
-        exercisesRepository.save(exercises);
+
+        exercisesRepository.save(exercise);
         userRepository.save(user);
     }
 
     @PostMapping("/exercises/{exerciseId}")
     public void toggleExercisesComplete(@PathVariable Long exercisesId) throws ExercisesNotFound {
-        Exercises exercises = exercisesRepository.findById(exercisesId).orElseThrow(() -> new ExercisesNotFound(EXERCISE_NOT_FOUND));
-        exercises.setCompleted(!exercises.getCompleted());
-        exercisesRepository.save(exercises);
+        Exercise exercise = exercisesRepository.findById(exercisesId).orElseThrow(() -> new ExercisesNotFound(EXERCISE_NOT_FOUND));
+
+        exercisesRepository.save(exercise);
     }
 
     @DeleteMapping("exercises/{exercisesId}")
     public void deleteExercises(@PathVariable Long exercisesId) throws ExercisesNotFound {
-        Exercises exercises = exercisesRepository.findById(exercisesId).orElseThrow(() -> new ExercisesNotFound(EXERCISE_NOT_FOUND));
-        exercisesRepository.delete(exercises);
+        Exercise exercise = exercisesRepository.findById(exercisesId).orElseThrow(() -> new ExercisesNotFound(EXERCISE_NOT_FOUND));
+        exercisesRepository.delete(exercise);
     }
 }

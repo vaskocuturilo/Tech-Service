@@ -5,50 +5,53 @@ import java.util.HashSet;
 import java.util.Set;
 
 @Entity
-@Table(name = "user", schema = "dbo")
+@Table(name = "user")
 public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Long Id;
 
-    private String username;
+    private String firstname;
 
-    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY,
-            cascade = CascadeType.ALL)
-    Set<Exercises> exercisesList;
+    private String password;
 
-
-    public User() {
-    }
-
-    public User(Long id, String username, Set<Exercises> exercisesList) {
-        this.id = id;
-        this.username = username;
-        this.exercisesList = exercisesList;
-    }
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    private Set<Exercise> exercises = new HashSet<>();
 
     public Long getId() {
-        return id;
+        return Id;
     }
 
     public void setId(Long id) {
-        this.id = id;
+        Id = id;
     }
 
-    public String getUsername() {
-        return username;
+    public String getFirstname() {
+        return firstname;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
+    public void setFirstname(String firstname) {
+        this.firstname = firstname;
     }
 
-    public Set<Exercises> getExercisesList() {
-        return exercisesList;
+    public String getPassword() {
+        return password;
     }
 
-    public void setExercisesList(Set<Exercises> exercisesList) {
-        this.exercisesList = exercisesList;
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public Set<Exercise> getExercises() {
+        return exercises;
+    }
+
+    public void setExercises(Set<Exercise> exercises) {
+        this.exercises = exercises;
+
+        for (Exercise e : exercises) {
+            e.setExerciseName(this);
+        }
     }
 }
