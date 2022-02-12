@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import site.testengineer.techInterview.entity.Exercise;
@@ -28,7 +29,7 @@ public class ExerciseController {
     }
 
     @PostMapping
-    public ResponseEntity<Exercise> create(@RequestBody Exercise exercise) {
+    public ResponseEntity<Exercise> create(@Validated @RequestBody Exercise exercise) {
         Optional<User> optionalUser = userRepository.findById(exercise.getUser().getId());
         if (!optionalUser.isPresent()) {
             return ResponseEntity.unprocessableEntity().build();
