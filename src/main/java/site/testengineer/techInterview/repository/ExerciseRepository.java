@@ -1,8 +1,8 @@
 package site.testengineer.techInterview.repository;
 
-import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.jpa.repository.JpaRepository;
 import site.testengineer.techInterview.entity.Exercise;
 
-public interface ExerciseRepository extends CrudRepository<Exercise, Long> {
+public interface ExerciseRepository extends JpaRepository<Exercise, Long> {
 
 }
