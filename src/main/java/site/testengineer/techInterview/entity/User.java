@@ -51,7 +51,7 @@ public class User {
         this.exercises = exercises;
 
         for (Exercise e : exercises) {
-            e.setExerciseName(this);
+            e.setUser(this);
         }
     }
 }

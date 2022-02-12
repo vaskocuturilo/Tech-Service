@@ -31,9 +31,9 @@ public class Exercise {
         return exerciseName;
     }
 
-    public void setExerciseName(User user) {
+    public void setExerciseName(String exerciseName) {
 
-        this.user = user;
+        this.exerciseName = exerciseName;
     }
 
     public User getUser() {
