@@ -1,6 +1,8 @@
 package site.testengineer.techInterview.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
@@ -31,5 +33,10 @@ public class UserController {
                 .buildAndExpand(saveUser.getId()).toUri();
 
         return ResponseEntity.created(location).body(saveUser);
+    }
+
+    @GetMapping
+    public ResponseEntity<Page<User>> getAllUsers(Pageable pageable) {
+        return ResponseEntity.ok(userRepository.findAll(pageable));
     }
 }
