@@ -29,7 +29,7 @@ public class UserController {
 
     @PostMapping
     public ResponseEntity<?> create(@Validated @RequestBody User user) {
-        Optional<User> optionalUser = userRepository.findByfirstname(user.getFirstname());
+        Optional<User> optionalUser = userRepository.findByFirstname(user.getFirstname());
         if (optionalUser.isPresent()) {
             return ResponseEntity.badRequest().body("The user " + user.getFirstname() + " found in database; Change name.");
         }
