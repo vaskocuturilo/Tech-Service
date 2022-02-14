@@ -31,7 +31,7 @@ public class UserController {
     public ResponseEntity<?> create(@Validated @RequestBody User user) {
         Optional<User> optionalUser = userRepository.findByFirstname(user.getFirstname());
         if (optionalUser.isPresent()) {
-            return ResponseEntity.badRequest().body("The user " + user.getFirstname() + " found in database; Change name.");
+            return ResponseEntity.badRequest().body("The user " + user.getFirstname() + " exist. Please, change user name.");
         }
         User saveUser = userRepository.save(user);
 
@@ -39,6 +39,19 @@ public class UserController {
                 .buildAndExpand(saveUser.getId()).toUri();
 
         return ResponseEntity.created(location).body(saveUser);
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<?> deleteUser(@PathVariable Long id) {
+        Optional<User> userOptional = userRepository.findById(id);
+        if (!userOptional.isPresent()) {
+            return ResponseEntity.badRequest().body("The user with id = " + id + " not exist.");
+        }
+
+        userRepository.deleteById(id);
+
+        return ResponseEntity.ok("The user with id  = " + id + " was delete from database.");
+
     }
 
     @GetMapping
