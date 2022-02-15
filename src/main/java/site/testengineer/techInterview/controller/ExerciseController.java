@@ -45,6 +45,27 @@ public class ExerciseController {
         return ResponseEntity.created(location).body(saveExercise);
     }
 
+    @PutMapping("/{id}")
+    public ResponseEntity<?> updateExercise(@PathVariable Long id, @Validated @RequestBody Exercise exercise) {
+        Optional<User> optionalUser = userRepository.findById(exercise.getUser().getId());
+
+        if (!optionalUser.isPresent()) {
+            return ResponseEntity.badRequest().body("");
+        }
+
+        Optional<Exercise> optionalExercise = exerciseRepository.findById(id);
+        if (!optionalExercise.isPresent()) {
+            return ResponseEntity.badRequest().body("");
+        }
+
+        exercise.setUser(optionalUser.get());
+        exercise.setId(optionalExercise.get().getId());
+        exerciseRepository.save(exercise);
+
+        return ResponseEntity.ok("The data for exercise with id = " + id + "was update");
+
+    }
+
     @GetMapping
     public ResponseEntity<Page<Exercise>> getAll(Pageable pageable) {
         return ResponseEntity.ok(exerciseRepository.findAll(pageable));
