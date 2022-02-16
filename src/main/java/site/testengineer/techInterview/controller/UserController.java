@@ -29,9 +29,9 @@ public class UserController {
 
     @PostMapping
     public ResponseEntity<?> createUser(@Validated @RequestBody User user) {
-        Optional<User> optionalUser = userRepository.findByFirstname(user.getFirstname());
+        Optional<User> optionalUser = userRepository.findByFirstname(user.getEmail());
         if (optionalUser.isPresent()) {
-            return ResponseEntity.badRequest().body("The user " + user.getFirstname() + " exist. Please, change user name.");
+            return ResponseEntity.badRequest().body("The user " + user.getEmail() + " exist. Please, change user name.");
         }
         User saveUser = userRepository.save(user);
 
@@ -55,7 +55,7 @@ public class UserController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<?> updateUser(@PathVariable Long id, @RequestBody User user) {
+    public ResponseEntity<?> updateUser(@PathVariable Long id, @Validated @RequestBody User user) {
         Optional<User> userOptional = userRepository.findById(id);
         if (!userOptional.isPresent()) {
             return ResponseEntity.badRequest().body("The user with id = " + id + " not exist.");
