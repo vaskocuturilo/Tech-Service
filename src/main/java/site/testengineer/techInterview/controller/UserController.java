@@ -14,6 +14,8 @@ import site.testengineer.techInterview.repository.UserRepository;
 import java.net.URI;
 import java.util.Optional;
 
+import static site.testengineer.techInterview.utils.EmailValidation.isEmailValid;
+
 @RestController
 @RequestMapping("/api/v1/user")
 public class UserController {
@@ -29,7 +31,10 @@ public class UserController {
 
     @PostMapping
     public ResponseEntity<?> createUser(@Validated @RequestBody User user) {
-        Optional<User> optionalUser = userRepository.findByFirstname(user.getEmail());
+        if (!isEmailValid(user.getEmail(), "^(.+)@(.+)$")) {
+            return ResponseEntity.badRequest().body("The user " + user.getEmail() + " has invalid email.");
+        }
+        Optional<User> optionalUser = userRepository.findByEmail(user.getEmail());
         if (optionalUser.isPresent()) {
             return ResponseEntity.badRequest().body("The user " + user.getEmail() + " exist. Please, change user name.");
         }
