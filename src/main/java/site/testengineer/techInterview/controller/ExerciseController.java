@@ -29,7 +29,7 @@ public class ExerciseController {
     }
 
     @PostMapping
-    public ResponseEntity<Exercise> create(@Validated @RequestBody Exercise exercise) {
+    public ResponseEntity<Exercise> createExercise(@Validated @RequestBody Exercise exercise) {
         Optional<User> optionalUser = userRepository.findById(exercise.getUser().getId());
         if (!optionalUser.isPresent()) {
             return ResponseEntity.unprocessableEntity().build();
