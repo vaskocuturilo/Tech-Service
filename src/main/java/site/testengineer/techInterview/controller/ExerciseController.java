@@ -29,7 +29,7 @@ public class ExerciseController {
     }
 
     @PostMapping
-    public ResponseEntity<Exercise> createExercise(@Validated @RequestBody Exercise exercise) {
+    public ResponseEntity<Exercise> create(@Validated @RequestBody Exercise exercise) {
         Optional<User> optionalUser = userRepository.findById(exercise.getUser().getId());
         if (!optionalUser.isPresent()) {
             return ResponseEntity.unprocessableEntity().build();
@@ -46,7 +46,7 @@ public class ExerciseController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<?> updateExercise(@PathVariable Long id, @Validated @RequestBody Exercise exercise) {
+    public ResponseEntity<?> update(@PathVariable Long id, @Validated @RequestBody Exercise exercise) {
         Optional<User> optionalUser = userRepository.findById(exercise.getUser().getId());
 
         if (!optionalUser.isPresent()) {
