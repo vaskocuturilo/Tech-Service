@@ -6,14 +6,10 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import site.testengineer.techInterview.entity.Exercise;
-import site.testengineer.techInterview.entity.User;
 import site.testengineer.techInterview.repository.ExerciseRepository;
 import site.testengineer.techInterview.repository.UserRepository;
-
-import java.net.URI;
-import java.util.Optional;
+import site.testengineer.techInterview.service.ExerciseService;
 
 @RestController
 @RequestMapping("/api/v1/exercise")
@@ -28,41 +24,24 @@ public class ExerciseController {
         this.exerciseRepository = exerciseRepository;
     }
 
+    ExerciseService exerciseService;
+
     @PostMapping
-    public ResponseEntity<Exercise> create(@Validated @RequestBody Exercise exercise) {
-        Optional<User> optionalUser = userRepository.findById(exercise.getUser().getId());
-        if (!optionalUser.isPresent()) {
-            return ResponseEntity.unprocessableEntity().build();
+    public ResponseEntity<?> createExercise(@Validated @RequestBody Exercise exercise) {
+        try {
+            return ResponseEntity.ok(exerciseService.create(exercise));
+        } catch (Exception exception) {
+            return ResponseEntity.badRequest().body(exception.getMessage());
         }
-
-        exercise.setUser(optionalUser.get());
-
-        Exercise saveExercise = exerciseRepository.save(exercise);
-
-        URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
-                .buildAndExpand(saveExercise.getId()).toUri();
-
-        return ResponseEntity.created(location).body(saveExercise);
     }
 
     @PutMapping("/{id}")
     public ResponseEntity<?> update(@PathVariable Long id, @Validated @RequestBody Exercise exercise) {
-        Optional<User> optionalUser = userRepository.findById(exercise.getUser().getId());
-
-        if (!optionalUser.isPresent()) {
-            return ResponseEntity.badRequest().body("");
+        try {
+            return ResponseEntity.ok(exerciseService.update(id, exercise));
+        } catch (Exception exception) {
+            return ResponseEntity.badRequest().body(exception.getMessage());
         }
-
-        Optional<Exercise> optionalExercise = exerciseRepository.findById(id);
-        if (!optionalExercise.isPresent()) {
-            return ResponseEntity.badRequest().body("");
-        }
-
-        exercise.setUser(optionalUser.get());
-        exercise.setId(optionalExercise.get().getId());
-        exerciseRepository.save(exercise);
-
-        return ResponseEntity.ok("The data for exercise with id = " + id + "was update");
 
     }
 

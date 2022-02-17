@@ -6,16 +6,10 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import site.testengineer.techInterview.entity.User;
 import site.testengineer.techInterview.repository.ExerciseRepository;
 import site.testengineer.techInterview.repository.UserRepository;
 import site.testengineer.techInterview.service.UserService;
-
-import java.net.URI;
-import java.util.Optional;
-
-import static site.testengineer.techInterview.utils.EmailValidation.isEmailValid;
 
 @RestController
 @RequestMapping("/api/v1/user")
