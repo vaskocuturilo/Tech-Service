@@ -10,6 +10,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import site.testengineer.techInterview.entity.User;
 import site.testengineer.techInterview.repository.ExerciseRepository;
 import site.testengineer.techInterview.repository.UserRepository;
+import site.testengineer.techInterview.service.UserService;
 
 import java.net.URI;
 import java.util.Optional;
@@ -29,47 +30,33 @@ public class UserController {
         this.exerciseRepository = exerciseRepository;
     }
 
+    UserService userService;
+
     @PostMapping
     public ResponseEntity<?> createUser(@Validated @RequestBody User user) {
-        if (!isEmailValid(user.getEmail(), "^(.+)@(.+)$")) {
-            return ResponseEntity.badRequest().body("The user " + user.getEmail() + " has invalid email.");
+        try {
+            return ResponseEntity.ok(userService.create(user));
+        } catch (Exception exception) {
+            return ResponseEntity.badRequest().body(exception.getMessage());
         }
-        Optional<User> optionalUser = userRepository.findByEmail(user.getEmail());
-        if (optionalUser.isPresent()) {
-            return ResponseEntity.badRequest().body("The user " + user.getEmail() + " exist. Please, change user name.");
-        }
-        User saveUser = userRepository.save(user);
-
-        URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
-                .buildAndExpand(saveUser.getId()).toUri();
-
-        return ResponseEntity.created(location).body(saveUser);
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<?> deleteUser(@PathVariable Long id) {
-        Optional<User> userOptional = userRepository.findById(id);
-        if (!userOptional.isPresent()) {
-            return ResponseEntity.badRequest().body("The user with id = " + id + " not exist.");
+        try {
+            return ResponseEntity.ok(userService.delete(id));
+        } catch (Exception exception) {
+            return ResponseEntity.badRequest().body(exception.getMessage());
         }
-
-        userRepository.deleteById(id);
-
-        return ResponseEntity.ok("The user with id  = " + id + " was delete from database.");
-
     }
 
     @PutMapping("/{id}")
     public ResponseEntity<?> updateUser(@PathVariable Long id, @Validated @RequestBody User user) {
-        Optional<User> userOptional = userRepository.findById(id);
-        if (!userOptional.isPresent()) {
-            return ResponseEntity.badRequest().body("The user with id = " + id + " not exist.");
+        try {
+            return ResponseEntity.ok(userService.update(id, user));
+        } catch (Exception exception) {
+            return ResponseEntity.badRequest().body(exception.getMessage());
         }
-
-        user.setId(user.getId());
-        userRepository.save(user);
-
-        return ResponseEntity.ok("The data for user with id = " + id + "was update");
     }
 
     @GetMapping
