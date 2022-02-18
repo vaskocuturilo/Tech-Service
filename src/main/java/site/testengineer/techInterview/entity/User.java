@@ -4,6 +4,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotEmpty;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -17,8 +18,11 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(unique = true)
+    @NotEmpty(message = "Email cannot be empty or null")
     private String email;
 
+    @NotEmpty(message = "Password cannot be empty or null")
     private String password;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
