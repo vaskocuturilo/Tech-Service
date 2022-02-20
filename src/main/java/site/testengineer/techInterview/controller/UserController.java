@@ -1,5 +1,9 @@
 package site.testengineer.techInterview.controller;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,7 +19,7 @@ import site.testengineer.techInterview.repository.UserRepository;
 import site.testengineer.techInterview.service.UserService;
 
 @RestController
-@RequestMapping("/api/v1/user")
+@RequestMapping(path = {"/api/v1/user"}, produces = {"application/json"})
 public class UserController {
 
     private static Logger logger = LoggerFactory.getLogger(UserController.class);
@@ -34,6 +38,10 @@ public class UserController {
 
     UserService userService;
 
+    @Operation(summary = "Create a new user")
+    @ApiResponse(responseCode = "200", description = "The user was create",
+            content = {@Content(mediaType = "application/json",
+                    schema = @Schema(implementation = User.class))})
     @PostMapping
     public ResponseEntity<?> createUser(@Validated @RequestBody User user) {
         try {
@@ -44,6 +52,24 @@ public class UserController {
         }
     }
 
+    @Operation(summary = "Updated some a user fields")
+    @ApiResponse(responseCode = "200", description = "The user was update",
+            content = {@Content(mediaType = "application/json",
+                    schema = @Schema(implementation = User.class))})
+    @PutMapping("/{id}")
+    public ResponseEntity<?> updateUser(@PathVariable Long id, @Validated @RequestBody User user) {
+        try {
+            logger.info(UPDATE_USER, user.toString());
+            return ResponseEntity.ok(userService.update(id, user));
+        } catch (Exception exception) {
+            return ResponseEntity.badRequest().body(exception.getMessage());
+        }
+    }
+
+    @Operation(summary = "Delete a user")
+    @ApiResponse(responseCode = "200", description = "The user was delete",
+            content = {@Content(mediaType = "application/json",
+                    schema = @Schema(implementation = User.class))})
     @DeleteMapping("/{id}")
     public ResponseEntity<?> deleteUser(@PathVariable Long id) {
         try {
@@ -54,16 +80,10 @@ public class UserController {
         }
     }
 
-    @PutMapping("/{id}")
-    public ResponseEntity<?> updateUser(@PathVariable Long id, @Validated @RequestBody User user) {
-        try {
-            logger.info(DELETE_USER, user.toString());
-            return ResponseEntity.ok(userService.update(id, user));
-        } catch (Exception exception) {
-            return ResponseEntity.badRequest().body(exception.getMessage());
-        }
-    }
-
+    @Operation(summary = "Get all users")
+    @ApiResponse(responseCode = "200", description = "Get information about all the users",
+            content = {@Content(mediaType = "application/json",
+                    schema = @Schema(implementation = User.class))})
     @GetMapping
     public ResponseEntity<Page<User>> getAllUsers(Pageable pageable) {
         return ResponseEntity.ok(userRepository.findAll(pageable));
