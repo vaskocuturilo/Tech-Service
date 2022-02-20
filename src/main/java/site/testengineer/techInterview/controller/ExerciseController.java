@@ -4,6 +4,8 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -18,6 +20,11 @@ import site.testengineer.techInterview.service.ExerciseService;
 @RestController
 @RequestMapping(path = {"/api/v1/exercise"}, consumes = {"application/json"})
 public class ExerciseController {
+
+    private static Logger logger = LoggerFactory.getLogger(UserController.class);
+    private static final String NEW_EXERCISE = "A new exercise was create with name:{}.";
+    private static final String UPDATE_EXERCISE = "A exercise with exercise:{} was update.";
+    private static final String GET_ALL_EXERCISES = "Get information about all exercises.";
 
     UserRepository userRepository;
     ExerciseRepository exerciseRepository;
@@ -36,6 +43,7 @@ public class ExerciseController {
     @PostMapping
     public ResponseEntity<?> createExercise(@Validated @RequestBody Exercise exercise) {
         try {
+            logger.info(NEW_EXERCISE, exercise.getExerciseName());
             return ResponseEntity.ok(exerciseService.create(exercise));
         } catch (Exception exception) {
             return ResponseEntity.badRequest().body(exception.getMessage());
@@ -49,6 +57,7 @@ public class ExerciseController {
     @PutMapping("/{id}")
     public ResponseEntity<?> updateExercise(@PathVariable Long id, @Validated @RequestBody Exercise exercise) {
         try {
+            logger.info(UPDATE_EXERCISE, exercise.toString());
             return ResponseEntity.ok(exerciseService.update(id, exercise));
         } catch (Exception exception) {
             return ResponseEntity.badRequest().body(exception.getMessage());
@@ -61,6 +70,7 @@ public class ExerciseController {
                     schema = @Schema(implementation = Exercise.class))})
     @GetMapping
     public ResponseEntity<Page<Exercise>> getAllExercise(Pageable pageable) {
+        logger.info(GET_ALL_EXERCISES, pageable.toString());
         return ResponseEntity.ok(exerciseRepository.findAll(pageable));
     }
 }
