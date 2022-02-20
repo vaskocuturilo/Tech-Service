@@ -1,5 +1,9 @@
 package site.testengineer.techInterview.controller;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -12,11 +16,12 @@ import site.testengineer.techInterview.repository.UserRepository;
 import site.testengineer.techInterview.service.ExerciseService;
 
 @RestController
-@RequestMapping("/api/v1/exercise")
+@RequestMapping(path = {"/api/v1/exercise"}, consumes = {"application/json"})
 public class ExerciseController {
 
     UserRepository userRepository;
     ExerciseRepository exerciseRepository;
+    ExerciseService exerciseService;
 
     @Autowired
     public ExerciseController(UserRepository userRepository, ExerciseRepository exerciseRepository) {
@@ -24,8 +29,10 @@ public class ExerciseController {
         this.exerciseRepository = exerciseRepository;
     }
 
-    ExerciseService exerciseService;
-
+    @Operation(summary = "Create a new exercise")
+    @ApiResponse(responseCode = "200", description = "The exercise was create",
+            content = {@Content(mediaType = "application/json",
+                    schema = @Schema(implementation = Exercise.class))})
     @PostMapping
     public ResponseEntity<?> createExercise(@Validated @RequestBody Exercise exercise) {
         try {
@@ -35,18 +42,25 @@ public class ExerciseController {
         }
     }
 
+    @Operation(summary = "Updated some a exercise fields")
+    @ApiResponse(responseCode = "200", description = "The exercise was update",
+            content = {@Content(mediaType = "application/json",
+                    schema = @Schema(implementation = Exercise.class))})
     @PutMapping("/{id}")
-    public ResponseEntity<?> update(@PathVariable Long id, @Validated @RequestBody Exercise exercise) {
+    public ResponseEntity<?> updateExercise(@PathVariable Long id, @Validated @RequestBody Exercise exercise) {
         try {
             return ResponseEntity.ok(exerciseService.update(id, exercise));
         } catch (Exception exception) {
             return ResponseEntity.badRequest().body(exception.getMessage());
         }
-
     }
 
+    @Operation(summary = "Get all exercises")
+    @ApiResponse(responseCode = "200", description = "Get information about all the exercise",
+            content = {@Content(mediaType = "application/json",
+                    schema = @Schema(implementation = Exercise.class))})
     @GetMapping
-    public ResponseEntity<Page<Exercise>> getAll(Pageable pageable) {
+    public ResponseEntity<Page<Exercise>> getAllExercise(Pageable pageable) {
         return ResponseEntity.ok(exerciseRepository.findAll(pageable));
     }
 }
