@@ -2,7 +2,7 @@ package site.testengineer.techInterview.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
-import site.testengineer.techInterview.entity.User;
+import site.testengineer.techInterview.model.User;
 
 import java.util.Optional;
 

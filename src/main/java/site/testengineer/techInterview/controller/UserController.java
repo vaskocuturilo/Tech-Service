@@ -13,7 +13,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-import site.testengineer.techInterview.entity.User;
+import site.testengineer.techInterview.model.User;
 import site.testengineer.techInterview.repository.ExerciseRepository;
 import site.testengineer.techInterview.repository.UserRepository;
 import site.testengineer.techInterview.service.UserService;

@@ -4,8 +4,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
-import site.testengineer.techInterview.entity.Exercise;
-import site.testengineer.techInterview.entity.User;
+import site.testengineer.techInterview.model.Exercise;
+import site.testengineer.techInterview.model.User;
 import site.testengineer.techInterview.repository.ExerciseRepository;
 import site.testengineer.techInterview.repository.UserRepository;
 
