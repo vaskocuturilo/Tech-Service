@@ -6,7 +6,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-import site.testengineer.techInterview.entity.Exercise;
+import site.testengineer.techInterview.model.Exercise;
 import site.testengineer.techInterview.repository.ExerciseRepository;
 import site.testengineer.techInterview.repository.UserRepository;
 import site.testengineer.techInterview.service.ExerciseService;

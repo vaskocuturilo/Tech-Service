@@ -1,4 +1,4 @@
-package site.testengineer.techInterview.entity;
+package site.testengineer.techInterview.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Getter;

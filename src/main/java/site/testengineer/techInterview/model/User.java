@@ -1,4 +1,4 @@
-package site.testengineer.techInterview.entity;
+package site.testengineer.techInterview.model;
 
 import lombok.Getter;
 import lombok.Setter;
